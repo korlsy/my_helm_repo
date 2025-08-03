@@ -2,13 +2,13 @@ apiVersion: v1
 entries:
   mynginx:
   - apiVersion: v2
-    appVersion: 1.16.1
-    created: "2025-08-03T19:13:58.398635205+09:00"
+    appVersion: 2.16.1
+    created: "2025-08-03T20:27:57.918297875+09:00"
     description: A halm chart for running nginx web server
-    digest: 466c1a67f7283da46fe2225e3138ad48d287a3ae21a3db007056c57d74ab6d4c
+    digest: 3a1a72a64af292f15ff9470a757906143738f99b6c7c39c803a2c258c8573b21
     name: mynginx
     type: application
     urls:
-    - https://github.com/korlsy/my_helm_repo/mynginx-0.1.1.tgz
-    version: 0.1.1
-generated: "2025-08-03T19:13:58.398180851+09:00"
+    - mynginx-1.1.1.tgz
+    version: 1.1.1
+generated: "2025-08-03T20:27:57.917662818+09:00"
