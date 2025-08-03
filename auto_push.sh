@@ -1,4 +1,6 @@
 #!/bin/sh
+rm /home/sangyeol/.cache/helm/repository/my-helm-repo-*
+rm /home/sangyeol/.cache/helm/repository/mynginx*.tgz-
 rm mynginx*.tgz
 helm package mynginx
 helm repo index .
