@@ -3,22 +3,12 @@ entries:
   mynginx:
   - apiVersion: v2
     appVersion: 2.16.2
-    created: "2025-08-03T20:44:33.680395612+09:00"
+    created: "2025-08-03T21:37:06.269315306+09:00"
     description: A halm chart for running nginx web server
-    digest: 804b77630caf658f580687a7e97a48e9556802d164824645a3f86c9f985eef0a
+    digest: d1fe7089faad6cf003b8af78306c53ece8a08d7a17a95a584d24e26038f9594d
     name: mynginx
     type: application
     urls:
     - mynginx-1.1.2.tgz
     version: 1.1.2
-  - apiVersion: v2
-    appVersion: 2.16.1
-    created: "2025-08-03T20:44:33.68016579+09:00"
-    description: A halm chart for running nginx web server
-    digest: a7948a1be0046084830f0c9959378f2e98702ad13c9af4a5f1a8f7624e8710ee
-    name: mynginx
-    type: application
-    urls:
-    - mynginx-1.1.1.tgz
-    version: 1.1.1
-generated: "2025-08-03T20:44:33.679780487+09:00"
+generated: "2025-08-03T21:37:06.2677268+09:00"
