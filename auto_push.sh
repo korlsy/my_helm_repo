@@ -1,6 +1,11 @@
 #!/bin/sh
 
 app_name="mynginx"
+if [ -z "$1"  ]; then
+	echo "app_name is emtpy, ${0} app_name"
+	exit $?
+fi
+app_name=$1
 
 helm package $app_name
 helm repo index .
