@@ -3,9 +3,9 @@ entries:
   myfastapi:
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2025-08-03T22:44:11.154731616+09:00"
+    created: "2025-08-03T22:48:42.608939406+09:00"
     description: A Helm chart for Kubernetes
-    digest: 89192ceb842f1c6035e209f2d82172c68810b3aee55ff5e958da1b935c146ccc
+    digest: 3c639c4980b12df0552bcf91d591710e48c266d74f5ba0c347272a811ee878bb
     name: myfastapi
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2025-08-03T22:44:11.154191598+09:00"
+    created: "2025-08-03T22:48:42.608262598+09:00"
     description: A Helm chart for Kubernetes
     digest: 9e280538ca44a85402443a47d41a8d9f30d6992782467540ae8eb624211f88db
     name: myfastapi
@@ -24,7 +24,7 @@ entries:
   mynginx:
   - apiVersion: v2
     appVersion: 2.16.2
-    created: "2025-08-03T22:44:11.15493911+09:00"
+    created: "2025-08-03T22:48:42.609353881+09:00"
     description: A halm chart for running nginx web server
     digest: 8697ab1c045939e5ae43bace5d8baaba41ba0f2dc1b49657ce4ed7b91368c37e
     name: mynginx
@@ -32,4 +32,4 @@ entries:
     urls:
     - mynginx-1.1.2.tgz
     version: 1.1.2
-generated: "2025-08-03T22:44:11.153468516+09:00"
+generated: "2025-08-03T22:48:42.607381799+09:00"
