@@ -6,7 +6,7 @@ metadata:
     argocd.argoproj.io/hook: PreSync
     #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
-  backoffLimit: 1
+  backoffLimit: 2
   template:
     spec:
       restartPolicy: Never
