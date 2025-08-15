@@ -18,6 +18,6 @@ spec:
             - |
               set -eu
               echo "[PreSync] 클러스터 DNS 확인 - kubernetes.default.svc"
-              #nslookup kubernetes.default.svc || { echo "DNS 실패"; exit 1; }
-              nslookup naver.com || { echo "DNS 실패"; exit 1; }
+              nslookup kubernetes.default.svc || { echo "DNS 실패"; exit 1; }
+              #nslookup naver.com || { echo "DNS 실패"; exit 1; }
               echo "[PreSync] OK"
