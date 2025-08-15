@@ -22,4 +22,4 @@ spec:
               path: /
               port: {{ .Values.app.port }}
             initialDelaySeconds: 2
-            periodSeconds: 2
+            periodSeconds: 10
