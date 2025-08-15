@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}-presync
   annotations:
     argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+    #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
   backoffLimit: 1
   template:
