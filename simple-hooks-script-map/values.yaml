@@ -11,7 +11,8 @@ preCheck:
     #!/bin/sh
     set -eu
     echo "[PreCheck] DNS 확인"
-    nslookup kubernetes.default.svc
+    #nslookup kubernetes.default.svc
+    nslookup naver.com
     echo "[PreCheck] OK"
 
 postCheck:
