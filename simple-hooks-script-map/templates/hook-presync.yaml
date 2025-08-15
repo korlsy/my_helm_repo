@@ -5,7 +5,7 @@ metadata:
   name: {{ include "chart.fullname" . }}-presync
   annotations:
     argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+    #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
   backoffLimit: {{ .Values.preCheck.backoffLimit | default 1 }}
   template:

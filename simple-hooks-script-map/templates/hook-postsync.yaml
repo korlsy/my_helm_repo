@@ -5,7 +5,7 @@ metadata:
   name: {{ include "chart.fullname" . }}-postsync
   annotations:
     argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+    #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
   backoffLimit: {{ .Values.postCheck.backoffLimit | default 0 }}
   template:

@@ -5,7 +5,7 @@ app:
 preCheck:
   enabled: true
   image: busybox:1.36
-  backoffLimit: 1
+  backoffLimit: 2
   scriptName: precheck.sh
   scriptContent: |
     #!/bin/sh
