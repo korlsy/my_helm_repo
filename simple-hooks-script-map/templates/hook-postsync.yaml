@@ -27,6 +27,8 @@ spec:
             - name: workdir
               mountPath: /work
           env:
+            - name: RELEASE_NAME
+              value: {{ .Release.Name | quote }}          # ← 추가          
             - name: SCRIPT
               value: {{ required "postCheck.scriptName is required" .Values.postCheck.scriptName }}
           command: ["/bin/sh","-c"]
