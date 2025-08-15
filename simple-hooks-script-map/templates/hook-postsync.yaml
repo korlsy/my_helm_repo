@@ -1,0 +1,38 @@
+{{- if .Values.postCheck.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "chart.fullname" . }}-postsync
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+spec:
+  backoffLimit: {{ .Values.postCheck.backoffLimit | default 0 }}
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: hook-scripts
+          configMap:
+            name: {{ include "chart.fullname" . }}-hook-scripts
+            defaultMode: 0755
+      containers:
+        - name: postsync
+          image: {{ .Values.postCheck.image }}
+          volumeMounts:
+            - name: hook-scripts
+              mountPath: /hooks
+          env:
+            - name: RELEASE_NAME
+              value: {{ .Release.Name | quote }}
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              set -eu
+              ls -l /hooks
+              /hooks/{{ required "postCheck.scriptName is required" .Values.postCheck.scriptName }}
+{{- end }}

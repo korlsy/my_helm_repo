@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "chart.fullname" . }}-hook-scripts
+data:
+  {{- if and .Values.preCheck.enabled .Values.preCheck.scriptName .Values.preCheck.scriptContent }}
+  {{ .Values.preCheck.scriptName }}: |
+{{ .Values.preCheck.scriptContent | nindent 4 }}
+  {{- end }}
+  {{- if and .Values.postCheck.enabled .Values.postCheck.scriptName .Values.postCheck.scriptContent }}
+  {{ .Values.postCheck.scriptName }}: |
+{{ .Values.postCheck.scriptContent | nindent 4 }}
+  {{- end }}

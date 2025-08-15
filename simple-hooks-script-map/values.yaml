@@ -1,0 +1,29 @@
+app:
+  image: nginx:1.25-alpine
+  port: 80
+
+preCheck:
+  enabled: true
+  image: busybox:1.36
+  backoffLimit: 1
+  scriptName: precheck.sh
+  scriptContent: |
+    #!/bin/sh
+    set -eu
+    echo "[PreCheck] DNS 확인"
+    nslookup kubernetes.default.svc
+    echo "[PreCheck] OK"
+
+postCheck:
+  enabled: true
+  image: curlimages/curl:8.8.0
+  backoffLimit: 0
+  scriptName: postcheck.sh
+  scriptContent: |
+    #!/bin/sh
+    set -eu
+    SVC="${RELEASE_NAME}-svc"
+    URL="http://$SVC:80/"
+    echo "[PostCheck] $URL 응답 확인"
+    curl -fsS "$URL" >/dev/null
+    echo "[PostCheck] OK"
