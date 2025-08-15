@@ -5,7 +5,8 @@ metadata:
   name: {{ include "chart.fullname" . }}-presync
   annotations:
     argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+    # wave 기본값 0 (CM이 -1이라 먼저 생성됨)
+    #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
   backoffLimit: {{ .Values.preCheck.backoffLimit | default 1 }}
   template:
@@ -23,16 +24,17 @@ spec:
             - name: hook-scripts
               mountPath: /hooks
           env:
-            - name: RELEASE_NAME
-              value: {{ .Release.Name | quote }}
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+            - name: SCRIPT
+              value: {{ required "preCheck.scriptName is required" .Values.preCheck.scriptName }}
           command: ["/bin/sh","-c"]
           args:
             - |
-              set -eu
-              ls -l /hooks
-              /hooks/{{ required "preCheck.scriptName is required" .Values.preCheck.scriptName }}
+              set -euxo pipefail
+              echo "[PreSync] scripts in /hooks:"
+              ls -l /hooks || true
+              # CRLF -> LF 변환 (윈도우 개행 방어)
+              for f in /hooks/*; do [ -f "$f" ] && sed -i 's/\r$//' "$f"; done
+              chmod +x /hooks/* || true
+              echo "[PreSync] running: /hooks/${SCRIPT}"
+              /hooks/${SCRIPT}
 {{- end }}

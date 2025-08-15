@@ -5,7 +5,7 @@ metadata:
   name: {{ include "chart.fullname" . }}-postsync
   annotations:
     argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+    #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
   backoffLimit: {{ .Values.postCheck.backoffLimit | default 0 }}
   template:
@@ -23,16 +23,15 @@ spec:
             - name: hook-scripts
               mountPath: /hooks
           env:
-            - name: RELEASE_NAME
-              value: {{ .Release.Name | quote }}
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+            - name: SCRIPT
+              value: {{ required "postCheck.scriptName is required" .Values.postCheck.scriptName }}
           command: ["/bin/sh","-c"]
           args:
             - |
-              set -eu
-              ls -l /hooks
-              /hooks/{{ required "postCheck.scriptName is required" .Values.postCheck.scriptName }}
+              set -euxo pipefail
+              ls -l /hooks || true
+              for f in /hooks/*; do [ -f "$f" ] && sed -i 's/\r$//' "$f"; done
+              chmod +x /hooks/* || true
+              echo "[PostSync] running: /hooks/${SCRIPT}"
+              /hooks/${SCRIPT}
 {{- end }}
