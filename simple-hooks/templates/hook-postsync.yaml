@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-postsync
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: postsync
+          image: curlimages/curl:8.8.0
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              set -eu
+              SVC="{{ .Release.Name }}-svc"
+              URL="http://$SVC:80/"
+              echo "[PostSync] 서비스 헬스 체크: $URL"
+              # 200 이 아니면 -f 로 실패 처리
+              curl -fsS "$URL" >/dev/null
+              echo "[PostSync] OK"
