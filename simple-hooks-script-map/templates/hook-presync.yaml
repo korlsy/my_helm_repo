@@ -5,8 +5,7 @@ metadata:
   name: {{ include "chart.fullname" . }}-presync
   annotations:
     argocd.argoproj.io/hook: PreSync
-    # wave 기본값 0 (CM이 -1이라 먼저 생성됨)
-    #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
   backoffLimit: {{ .Values.preCheck.backoffLimit | default 1 }}
   template:
@@ -17,12 +16,16 @@ spec:
           configMap:
             name: {{ include "chart.fullname" . }}-hook-scripts
             defaultMode: 0755
+        - name: workdir
+          emptyDir: {}               # <-- 쓰기 가능 작업 디렉토리
       containers:
         - name: presync
           image: {{ .Values.preCheck.image }}
           volumeMounts:
             - name: hook-scripts
-              mountPath: /hooks
+              mountPath: /hooks      # 읽기 전용 (ConfigMap)
+            - name: workdir
+              mountPath: /work       # 읽기/쓰기 OK
           env:
             - name: SCRIPT
               value: {{ required "preCheck.scriptName is required" .Values.preCheck.scriptName }}
@@ -30,11 +33,17 @@ spec:
           args:
             - |
               set -euxo pipefail
-              echo "[PreSync] scripts in /hooks:"
-              ls -l /hooks || true
-              # CRLF -> LF 변환 (윈도우 개행 방어)
-              for f in /hooks/*; do [ -f "$f" ] && sed -i 's/\r$//' "$f"; done
-              chmod +x /hooks/* || true
-              echo "[PreSync] running: /hooks/${SCRIPT}"
-              /hooks/${SCRIPT}
+              echo "[PreSync] copy scripts to /work (writable)"
+              # 모든 스크립트를 /work로 복사하면서 CRLF 제거
+              for f in /hooks/*; do
+                [ -f "$f" ] || continue
+                base="$(basename "$f")"
+                # CRLF -> LF 변환: sed stdout 리다이렉션으로 새 파일 만들기
+                sed 's/\r$//' "$f" > "/work/$base"
+                chmod +x "/work/$base" || true
+              done
+
+              echo "[PreSync] running /work/${SCRIPT}"
+              ls -l /work || true
+              /work/${SCRIPT}
 {{- end }}

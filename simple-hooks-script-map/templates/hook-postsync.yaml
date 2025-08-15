@@ -5,7 +5,7 @@ metadata:
   name: {{ include "chart.fullname" . }}-postsync
   annotations:
     argocd.argoproj.io/hook: PostSync
-    #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
 spec:
   backoffLimit: {{ .Values.postCheck.backoffLimit | default 0 }}
   template:
@@ -16,12 +16,16 @@ spec:
           configMap:
             name: {{ include "chart.fullname" . }}-hook-scripts
             defaultMode: 0755
+        - name: workdir
+          emptyDir: {}
       containers:
         - name: postsync
           image: {{ .Values.postCheck.image }}
           volumeMounts:
             - name: hook-scripts
               mountPath: /hooks
+            - name: workdir
+              mountPath: /work
           env:
             - name: SCRIPT
               value: {{ required "postCheck.scriptName is required" .Values.postCheck.scriptName }}
@@ -29,9 +33,14 @@ spec:
           args:
             - |
               set -euxo pipefail
-              ls -l /hooks || true
-              for f in /hooks/*; do [ -f "$f" ] && sed -i 's/\r$//' "$f"; done
-              chmod +x /hooks/* || true
-              echo "[PostSync] running: /hooks/${SCRIPT}"
-              /hooks/${SCRIPT}
+              for f in /hooks/*; do
+                [ -f "$f" ] || continue
+                base="$(basename "$f")"
+                sed 's/\r$//' "$f" > "/work/$base"
+                chmod +x "/work/$base" || true
+              done
+
+              echo "[PostSync] running /work/${SCRIPT}"
+              ls -l /work || true
+              /work/${SCRIPT}
 {{- end }}
