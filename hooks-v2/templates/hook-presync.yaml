@@ -15,7 +15,7 @@ spec:
       volumes:
         - name: hook-scripts
           configMap:
-            name: {{ include "chart.fullname" . }}-hook-scripts
+            name: {{ .Release.Name }}-hook-scripts
             defaultMode: 0755
         - name: workdir
           emptyDir: {}               # <-- 쓰기 가능 작업 디렉토리

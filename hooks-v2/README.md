@@ -1,8 +1,8 @@
 ### [ simple-hooks-script-map ]
 	
-helm create simple-hooks-script-map
+helm create hooks-v2
 
-helm package simple-hooks-script-map/
+helm package hooks-v2/
 
 helm repo index .
 
@@ -14,14 +14,14 @@ helm search repo my-helm-repo
 
 kubectl create ns demo
 
-helm install simple-hooks-script-map my-helm-repo/simple-hooks-script-map -n demo 
-	[helm install simple-hooks-script-map ./simple-hooks-script-map -n demo]
+helm install hooks-v2 my-helm-repo/hooks-v2 -n demo 
+	[helm install simple-hooks-script-map ./hooks-v2 -n demo]
 	
-helm uninstall simple-hooks-script-map -n demo
+helm uninstall hooks-v2 -n demo
 
 ---
 ### deploy
-rm -f ./simple-hooks-script-map*tgz;helm package simple-hooks-script-map/;helm repo index .;
+rm -f ./hooks-v2*tgz;helm package hooks-v2/;helm repo index .;
 
 git add .;git commit -m "c";git push
 
