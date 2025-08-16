@@ -2,7 +2,8 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "chart.fullname" . }}-presync
+  #name: {{ include "chart.fullname" . }}-presync
+  name: {{ .Release.Name }}-presync
   annotations:
     argocd.argoproj.io/hook: PreSync
     #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
