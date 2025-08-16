@@ -1,5 +1,5 @@
 apiVersion: v2
-name: simple-hooks-v2
-version: 0.1.6
+name: hooks-v2
+version: 0.1.7
 description: Helm hooks running shell scripts defined in values.yaml
 type: application

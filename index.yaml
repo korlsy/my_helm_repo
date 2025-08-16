@@ -1,9 +1,19 @@
 apiVersion: v1
 entries:
+  hooks-v2:
+  - apiVersion: v2
+    created: "2025-08-16T21:02:25.14283899+09:00"
+    description: Helm hooks running shell scripts defined in values.yaml
+    digest: 1782f6e4cb59dbef7f050f9a7877e03db51e8b73b6d5d449293d18b2d6c6d107
+    name: hooks-v2
+    type: application
+    urls:
+    - hooks-v2-0.1.7.tgz
+    version: 0.1.7
   myfastapi:
   - apiVersion: v2
     appVersion: 2.0.2
-    created: "2025-08-16T00:53:54.695508466+09:00"
+    created: "2025-08-16T21:02:25.14327701+09:00"
     description: A Helm chart for Kubernetes
     digest: b73f7b13af8b39bc1d670f2aa0f8c8ffc8d82dfc231e6ee9e708c0263730b96f
     name: myfastapi
@@ -14,7 +24,7 @@ entries:
   mynginx:
   - apiVersion: v2
     appVersion: 2.16.2
-    created: "2025-08-16T00:53:54.695815362+09:00"
+    created: "2025-08-16T21:02:25.143482614+09:00"
     description: A halm chart for running nginx web server
     digest: 8697ab1c045939e5ae43bace5d8baaba41ba0f2dc1b49657ce4ed7b91368c37e
     name: mynginx
@@ -24,7 +34,7 @@ entries:
     version: 1.1.2
   simple-hooks:
   - apiVersion: v2
-    created: "2025-08-16T00:53:54.696058686+09:00"
+    created: "2025-08-16T21:02:25.143799974+09:00"
     description: Minimal Helm chart with Argo CD PreSync/PostSync hooks
     digest: 7c06180386f2e89bc029b3dcd4e2b0f728c80393f7eb77940c83fb31e9a944ae
     name: simple-hooks
@@ -32,14 +42,4 @@ entries:
     urls:
     - simple-hooks-0.1.5.tgz
     version: 0.1.5
-  simple-hooks-v2:
-  - apiVersion: v2
-    created: "2025-08-16T00:53:54.696437995+09:00"
-    description: Helm hooks running shell scripts defined in values.yaml
-    digest: 4952686f3e72c77e38da61951159e050148339e5be4bc8b17c1fdabd91dfdbce
-    name: simple-hooks-v2
-    type: application
-    urls:
-    - simple-hooks-v2-0.1.6.tgz
-    version: 0.1.6
-generated: "2025-08-16T00:53:54.694852077+09:00"
+generated: "2025-08-16T21:02:25.142388063+09:00"
