@@ -7,6 +7,8 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PreSync
     #argocd.argoproj.io/hook-delete-policy: HookSucceeded,HookFailed
+     # 다음 배포에서 같은 훅을 다시 만들기 직전에만 삭제 (그 외에는 남겨둠)
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation   
 spec:
   backoffLimit: {{ .Values.preCheck.backoffLimit | default 1 }}
   template:
