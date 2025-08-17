@@ -1,4 +1,6 @@
 ### [ simple-hooks-script-map ]
+
+# sh 파일을 map 으로 처리.
 	
 helm create hooks-v2
 
